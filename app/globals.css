@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg text-text font-sans antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgb(59 130 246 / 0.08), transparent),
+    linear-gradient(to bottom, #0a0e17, #070a12);
+  background-attachment: fixed;
+}
+
+.panel {
+  @apply bg-bg-panel border border-border rounded-lg;
+}
+
+.panel-inset {
+  @apply bg-bg-elevated border border-border rounded-md;
+}
+
+.label {
+  @apply text-xs font-medium uppercase tracking-wider text-text-dim flex items-center gap-2;
+}
+
+.input {
+  @apply w-full bg-bg-elevated border border-border rounded-md px-3 py-2 text-sm text-text
+         placeholder:text-muted focus:outline-none focus:border-accent focus:shadow-glow transition;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium
+         transition disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply btn bg-accent text-white hover:bg-accent-glow shadow-glow;
+}
+
+.btn-ghost {
+  @apply btn bg-transparent hover:bg-bg-hover text-text-dim hover:text-text;
+}
+
+.btn-outline {
+  @apply btn border border-border hover:border-accent text-text;
+}
+
+textarea.input {
+  @apply resize-none leading-relaxed font-mono text-[13px];
+}
+
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #1f2942; border-radius: 4px; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: #2a3654; }
+
+.credit-pill {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full border border-success/30
+         bg-success/10 text-success text-xs font-mono;
+}
+
+.credit-pill::before {
+  content: "";
+  @apply w-1.5 h-1.5 rounded-full bg-success;
+  box-shadow: 0 0 8px currentColor;
+}
