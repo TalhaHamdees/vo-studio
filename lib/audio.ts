@@ -167,7 +167,11 @@ export async function concatMp3Blobs(blobs: Blob[]): Promise<Blob> {
   if (blobs.length === 0) return new Blob([], { type: "audio/mpeg" });
   if (blobs.length === 1) return blobs[0];
   const buffers = await Promise.all(blobs.map((b) => b.arrayBuffer()));
-  return new Blob(buffers, { type: "audio/mpeg" });
+  // Strip ID3 tags and Xing/Info metadata frames from every chunk before
+  // concatenation. Without this, the merged file inherits the first chunk's
+  // Xing duration counter and players stop after only that chunk plays.
+  const cleaned = buffers.map((b) => stripMp3Metadata(b));
+  return new Blob(cleaned, { type: "audio/mpeg" });
 }
 
 export async function zipBlobs(blobs: Blob[], prefix = "chunk"): Promise<Blob> {
