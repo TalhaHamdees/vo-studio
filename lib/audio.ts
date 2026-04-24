@@ -170,7 +170,9 @@ export async function concatMp3Blobs(blobs: Blob[]): Promise<Blob> {
   // Strip ID3 tags and Xing/Info metadata frames from every chunk before
   // concatenation. Without this, the merged file inherits the first chunk's
   // Xing duration counter and players stop after only that chunk plays.
-  const cleaned = buffers.map((b) => stripMp3Metadata(b));
+  // Cast to BlobPart[] to satisfy TS' strict Uint8Array<ArrayBufferLike>
+  // generic; Uint8Array is a valid BlobPart at runtime.
+  const cleaned = buffers.map((b) => stripMp3Metadata(b)) as BlobPart[];
   return new Blob(cleaned, { type: "audio/mpeg" });
 }
 
